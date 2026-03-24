@@ -29,7 +29,13 @@ main() {
     binary="fabric-${platform}-${arch_name}"
   fi
 
-  url="https://github.com/${REPO}/releases/latest/download/${binary}"
+  # Get latest release tag (including prereleases)
+  tag=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases" | grep '"tag_name"' | head -1 | cut -d'"' -f4)
+  if [ -z "$tag" ]; then
+    echo "error: could not determine latest release"
+    exit 1
+  fi
+  url="https://github.com/${REPO}/releases/download/${tag}/${binary}"
 
   echo "  fabric installer"
   echo "  os:      $platform"
