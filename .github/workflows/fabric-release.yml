@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - run: go test ./... -count=1 -timeout 60s
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - goos: darwin
+            goarch: arm64
+            name: Darwin-arm64
+          - goos: darwin
+            goarch: amd64
+            name: Darwin-x86_64
+          - goos: linux
+            goarch: amd64
+            name: Linux-x86_64
+          - goos: linux
+            goarch: arm64
+            name: Linux-aarch64
+          - goos: windows
+            goarch: amd64
+            name: Windows-x86_64.exe
+          - goos: windows
+            goarch: arm64
+            name: Windows-arm64.exe
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          BINARY_NAME: fabric-${{ matrix.name }}
+        run: go build -o "$BINARY_NAME" ./cmd/fabric/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: fabric-${{ matrix.name }}
+          path: fabric-${{ matrix.name }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: binaries
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: binaries/fabric-*
+          generate_release_notes: true

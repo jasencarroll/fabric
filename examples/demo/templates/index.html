@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header>
+  <h1>Notes</h1>
+  <p>{{ notes|length }} note{{ 's' if notes|length != 1 }} &middot;
+    powered by <strong>Fabric</strong> &mdash; Go + Python + SQLite</p>
+</header>
+
+<main>
+  <form method="post" action="{{ url_for('add_note') }}">
+    <label>
+      New note
+      <input name="text" type="text" placeholder="What's on your mind?" required autofocus>
+    </label>
+    <button type="submit">Add</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Note</th>
+        <th>Created</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for note in notes %}
+      <tr>
+        <td>{{ note.id }}</td>
+        <td>{{ note.text }}</td>
+        <td><code>{{ note.created_at }}</code></td>
+        <td>
+          <form method="post" action="{{ url_for('delete_note') }}" style="margin:0">
+            <input type="hidden" name="id" value="{{ note.id }}">
+            <button type="submit">&times;</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4">No notes yet. Add one above.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</main>
+{% endblock %}

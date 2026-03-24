@@ -1,0 +1,14 @@
+# Binary
+/fabric
+
+# Python
+*.pyc
+__pycache__/
+.venv/
+uv.lock
+
+# Data
+*.db
+
+# OS
+.DS_Store

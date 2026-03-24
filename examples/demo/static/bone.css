@@ -1,0 +1,344 @@
+/* bone — classless CSS base. Drop in, HTML looks clean. */
+/* https://axiomlayer.com */
+
+/* ---- Font ---- */
+/* Swap one import to change the entire site's typeface. */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+/* ---- Reset ---- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Root & Typography ---- */
+
+:root {
+  --bone-font: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+  --bone-line-height: 1.6;
+  --bone-max-width: 72ch;
+  --bone-radius: 3px;
+
+  /* Light mode — zinc palette */
+  --bone-bg: #ffffff;
+  --bone-fg: #27272a;
+  --bone-muted: #71717a;
+  --bone-border: #e4e4e7;
+  --bone-accent: #27272a;
+  --bone-accent-hover: #09090b;
+  --bone-surface: #f4f4f5;
+  --bone-code-bg: #f4f4f5;
+  --bone-mark: #fafaf9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bone-bg: #09090b;
+    --bone-fg: #e4e4e7;
+    --bone-muted: #a1a1aa;
+    --bone-border: #3f3f46;
+    --bone-accent: #e4e4e7;
+    --bone-accent-hover: #ffffff;
+    --bone-surface: #18181b;
+    --bone-code-bg: #18181b;
+    --bone-mark: #27272a;
+  }
+}
+
+html {
+  font-family: var(--bone-font);
+  font-size: 100%;
+  line-height: var(--bone-line-height);
+  color: var(--bone-fg);
+  background: var(--bone-bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  max-width: var(--bone-max-width);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* ---- Headings ---- */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-weight: 700;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+h5 { font-size: 1rem; }
+h6 { font-size: 0.875rem; color: var(--bone-muted); }
+
+h1:first-child,
+h2:first-child,
+h3:first-child {
+  margin-top: 0;
+}
+
+/* ---- Block elements ---- */
+
+p, ul, ol, dl, blockquote, pre, table, figure, details, hr {
+  margin-bottom: 1rem;
+}
+
+/* ---- Links ---- */
+
+a {
+  color: var(--bone-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  color: var(--bone-accent-hover);
+}
+
+/* ---- Lists ---- */
+
+ul, ol {
+  padding-left: 1.5em;
+}
+
+li + li {
+  margin-top: 0.25em;
+}
+
+dt {
+  font-weight: 700;
+  margin-top: 0.5em;
+}
+
+dd {
+  margin-left: 1.5em;
+}
+
+/* ---- Blockquote ---- */
+
+blockquote {
+  border-left: 2px solid var(--bone-border);
+  padding: 0.5em 1em;
+  color: var(--bone-muted);
+}
+
+/* ---- Code ---- */
+
+code, kbd, samp {
+  font-family: var(--bone-font);
+  font-size: 0.9em;
+  background: var(--bone-code-bg);
+  padding: 0.15em 0.3em;
+  border-radius: var(--bone-radius);
+}
+
+pre {
+  background: var(--bone-code-bg);
+  padding: 1em;
+  border-radius: var(--bone-radius);
+  overflow-x: auto;
+  line-height: 1.4;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+}
+
+/* ---- Tables ---- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5em 0.75em;
+  border-bottom: 1px solid var(--bone-border);
+}
+
+th {
+  font-weight: 700;
+}
+
+/* ---- Forms ---- */
+
+input, select, textarea, button {
+  font: inherit;
+  color: inherit;
+  border-radius: var(--bone-radius);
+}
+
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--bone-border);
+  background: var(--bone-bg);
+  margin-bottom: 0.75rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--bone-fg);
+  outline-offset: -1px;
+  border-color: var(--bone-fg);
+}
+
+textarea {
+  min-height: 6em;
+  resize: vertical;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline;
+  width: auto;
+  margin-right: 0.5em;
+}
+
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  display: inline-block;
+  width: auto;
+  padding: 0.5em 1.25em;
+  background: var(--bone-fg);
+  color: var(--bone-bg);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  background: var(--bone-accent-hover);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+fieldset {
+  border: 1px solid var(--bone-border);
+  border-radius: var(--bone-radius);
+  padding: 1em;
+  margin-bottom: 1rem;
+}
+
+legend {
+  font-weight: 700;
+  padding: 0 0.5em;
+}
+
+/* ---- Media ---- */
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figure {
+  text-align: center;
+}
+
+figcaption {
+  font-size: 0.875rem;
+  color: var(--bone-muted);
+  margin-top: 0.5em;
+}
+
+/* ---- Misc ---- */
+
+hr {
+  border: none;
+  border-top: 1px solid var(--bone-border);
+}
+
+mark {
+  background: var(--bone-mark);
+  padding: 0.1em 0.2em;
+  border-radius: 2px;
+}
+
+small {
+  font-size: 0.875rem;
+  color: var(--bone-muted);
+}
+
+details {
+  border: 1px solid var(--bone-border);
+  border-radius: var(--bone-radius);
+  padding: 0.75em 1em;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+details[open] summary {
+  margin-bottom: 0.5em;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* ---- Print ---- */
+
+@media print {
+  body {
+    max-width: none;
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  pre, code {
+    border: 1px solid #ddd;
+  }
+
+  nav, button, input[type="submit"] {
+    display: none;
+  }
+}
