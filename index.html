@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fabric — Go server for Python WSGI apps</title>
+  <link rel="stylesheet" href="bone.css">
+  <style>
+    header { padding: 2rem 0; }
+    header p { max-width: 48ch; }
+    pre { position: relative; }
+    .copy { position: absolute; top: 0.5rem; right: 0.5rem; cursor: pointer; opacity: 0.5; background: none; border: none; font-size: 0.875rem; }
+    .copy:hover { opacity: 1; }
+    section { margin: 2rem 0; }
+    footer { margin-top: 3rem; padding: 1rem 0; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Fabric</h1>
+  <p>Go server for Python WSGI apps. One binary. No Gunicorn. No nginx. No config.</p>
+</header>
+
+<section>
+  <h2>Install</h2>
+  <pre><code>curl -fsSL fabric.jasencarroll.com/install.sh | sh</code></pre>
+</section>
+
+<section>
+  <h2>Use</h2>
+  <pre><code>fabric run app.py</code></pre>
+  <p>Write a Python app. Run it with Fabric. Open your browser.</p>
+</section>
+
+<section>
+  <h2>Any WSGI app</h2>
+  <div class="grid">
+    <div>
+      <h3>Bare WSGI</h3>
+      <pre><code># app.py
+def app(environ, start_response):
+    start_response("200 OK", [
+        ("Content-Type", "text/html")
+    ])
+    return [b"&lt;h1&gt;Hello&lt;/h1&gt;"]</code></pre>
+    </div>
+    <div>
+      <h3>Flask</h3>
+      <pre><code># app.py
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "&lt;h1&gt;Hello&lt;/h1&gt;"</code></pre>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>How it works</h2>
+  <pre><code>Browser → Go net/http → Unix socket → Python wsgiref → your app</code></pre>
+  <p>Go handles HTTP, static files, and logging. Python handles your application logic. They communicate over a Unix socket using HTTP/1.1. Zero external Go dependencies. Zero external Python dependencies.</p>
+</section>
+
+<section>
+  <h2>Dev mode</h2>
+  <p>File watcher restarts your app on <code>.py</code> and <code>.html</code> changes. Crash recovery with loop detection. Dracula-themed Gin-style logs.</p>
+  <pre><code>[fabric] fabric v0.0.1
+[fabric] http://localhost:3000
+[fabric] watching app.py for changes
+
+[fabric] 2026/03/24 - 18:29:18 | 200 |  14.316ms | GET     | /
+[fabric] 2026/03/24 - 18:29:18 | 200 |   5.002ms | GET     | /static/bone.css
+[fabric] 2026/03/24 - 18:29:27 | 302 |   4.058ms | POST    | /add</code></pre>
+</section>
+
+<section>
+  <h2>Flags</h2>
+  <pre><code>fabric run app.py                serve on :3000 (dev mode)
+fabric run app.py --prod         JSON logs, no watcher
+fabric run app.py --port 8080    custom port
+fabric run app.py --static ./pub serve /static/ from directory
+fabric run app.py --db ./data.db SQLite path (sets FABRIC_DB)
+fabric version                   print version</code></pre>
+</section>
+
+<section>
+  <h2>What Fabric does not do</h2>
+  <ul>
+    <li>Scaffold projects</li>
+    <li>Manage Python packages</li>
+    <li>Install Python</li>
+    <li>Deploy</li>
+    <li>Choose your framework</li>
+    <li>Have opinions about your code</li>
+  </ul>
+</section>
+
+<footer>
+  <p>
+    <a href="https://github.com/jasencarroll/fabric-server">GitHub</a> · BSD 3-Clause · v0.0.1
+  </p>
+</footer>
+
+</body>
+</html>
