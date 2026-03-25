@@ -7,13 +7,13 @@ Go server for Python WSGI apps. One binary. No Gunicorn. No nginx.
 **macOS / Linux:**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jasencarroll/fabric-server/main/install.sh | sh
+curl -fsSL fabric.jasencarroll.com/install.sh | sh
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-irm https://raw.githubusercontent.com/jasencarroll/fabric-server/main/install.ps1 | iex
+irm fabric.jasencarroll.com/install.ps1 | iex
 ```
 
 **From source:**

@@ -1,9 +1,9 @@
 #!/bin/sh
 # Fabric installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/jasencarroll/fabric-server/main/install.sh | sh
+# Usage: curl -fsSL https://raw.githubusercontent.com/jasencarroll/fabric/main/install.sh | sh
 set -e
 
-REPO="jasencarroll/fabric-server"
+REPO="jasencarroll/fabric"
 INSTALL_DIR="${FABRIC_INSTALL_DIR:-$HOME/.local/bin}"
 
 main() {

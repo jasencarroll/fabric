@@ -1,8 +1,8 @@
 # Fabric installer for Windows
-# Usage: irm https://raw.githubusercontent.com/jasencarroll/fabric-server/main/install.ps1 | iex
+# Usage: irm https://raw.githubusercontent.com/jasencarroll/fabric/main/install.ps1 | iex
 $ErrorActionPreference = "Stop"
 
-$repo = "jasencarroll/fabric-server"
+$repo = "jasencarroll/fabric"
 $installDir = if ($env:FABRIC_INSTALL_DIR) { $env:FABRIC_INSTALL_DIR } else { "$env:LOCALAPPDATA\fabric" }
 
 $arch = if ([Environment]::Is64BitOperatingSystem) {
